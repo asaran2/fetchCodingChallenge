@@ -24,6 +24,7 @@ const ListCard = (props) => {
           })}
         </View>
       </Card>
+      <Text></Text>
     </View>
   );
 };
