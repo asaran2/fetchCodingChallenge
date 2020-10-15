@@ -34,13 +34,15 @@ class Home extends React.Component {
       .then((response) => response.json())
       .then((json) => {
         //filter out objects with key = "" or name = null
-         const filtered = json.filter((el) => el.name);
+        const filtered = json.filter((el) => el.name);
 
         //Design choice: when looking at name, sorted alphabetically.
         //"item 431" comes before "item 30". If wanted to look at number, could have just sorted by ID
 
         //sort first by listId, then by name
-        let sorted = filtered.sort((a, b) => a.listId - b.listId || a.name.localeCompare(b.name));
+        let sorted = filtered.sort(
+          (a, b) => a.listId - b.listId || a.name.localeCompare(b.name),
+        );
 
         //group by listId
         let group = this.groupBy(sorted);
@@ -52,7 +54,7 @@ class Home extends React.Component {
         });
       })
       .catch((error) => {
-        console.log.error('error');
+        console.log(error);
       });
   };
 
@@ -68,13 +70,7 @@ class Home extends React.Component {
         <View style={styles.container}>
           <ScrollView>
             {Object.entries(this.state.data).map(([key, value]) => {
-              let currListId = key;
-              return (
-                <View key={key}>
-                  <ListCard listId={currListId} items={value} />
-                  <Text style={styles.text}></Text>
-                </View>
-              );
+              return <ListCard key={key} listId={key} items={value} />;
             })}
           </ScrollView>
         </View>
